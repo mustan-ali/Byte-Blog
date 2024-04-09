@@ -1,6 +1,6 @@
 export const Footer = () => {
     return (
-        <div>Footer</div>
+        <p className="py-2 pb-2 text-center text-white bg-black text-sm">All rights reserved @Byte Blog {new Date().getFullYear()}</p>
     )
 }
 

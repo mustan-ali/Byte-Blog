@@ -20,7 +20,7 @@ export const CreatePost = () => {
     return (
         <div className='px-6 md:px-[200px] mt-8'>
             <h1 className='font-bold md:text-2xl text-xl '>Create a post</h1>
-            <form className='w-full flex flex-col space-y-4 md:space-y-8 mt-4'>
+            <form className='w-full flex flex-col space-y-4 md:space-y-8 mt-4 mb-4'>
                 <input type="text" placeholder='Enter post title' className='px-4 py-2 outline-none' />
                 <input type="file" className='px-4' />
                 <div className='flex flex-col'>

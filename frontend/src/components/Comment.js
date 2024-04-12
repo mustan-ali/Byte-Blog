@@ -1,3 +1,4 @@
+import { BiEdit } from 'react-icons/bi';
 import { MdDelete } from 'react-icons/md'
 
 export const Comment = () => {
@@ -9,6 +10,7 @@ export const Comment = () => {
                     <p>01/01/2024</p>
                     <p>12:00</p>
                     <div className="flex items-center justify-center space-x-2">
+                        <p className="cursor-pointer"><BiEdit /></p>
                         <p className="cursor-pointer"><MdDelete /></p>
                     </div>
                 </div>

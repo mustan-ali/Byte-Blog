@@ -4,9 +4,11 @@ const mongoose = require('mongoose');
 require('dotenv').config()
 const PORT = process.env.PORT;
 const authRoute = require('./routes/auth');
+const userRoute = require('./routes/users');
 
 app.use(express.json());
 app.use(authRoute);
+app.use(userRoute);
 
 const ConnectDatabase = async () => {
     try {

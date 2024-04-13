@@ -3,6 +3,10 @@ const app = express();
 const mongoose = require('mongoose');
 require('dotenv').config()
 const PORT = process.env.PORT;
+const authRoute = require('./routes/auth');
+
+app.use(express.json());
+app.use(authRoute);
 
 const ConnectDatabase = async () => {
     try {

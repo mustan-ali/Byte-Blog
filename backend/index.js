@@ -6,12 +6,14 @@ const PORT = process.env.PORT;
 const authRoute = require('./routes/auth');
 const userRoute = require('./routes/users');
 const postRoute = require('./routes/posts');
+const commentRoute = require('./routes/comments');
 
 
 app.use(express.json());
 app.use(authRoute);
 app.use(userRoute);
 app.use(postRoute);
+app.use(commentRoute);
 
 
 const ConnectDatabase = async () => {

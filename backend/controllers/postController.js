@@ -1,5 +1,3 @@
-const User = require('../models/User');
-const Comment = require('../models/Comment');
 const Post = require('../models/Post');
 require('dotenv').config()
 

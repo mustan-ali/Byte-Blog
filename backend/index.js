@@ -12,10 +12,10 @@ const commentRoute = require('./routes/comments');
 
 app.use(express.json());
 app.use(cookieParser());
-app.use(authRoute);
-app.use(userRoute);
-app.use(postRoute);
-app.use(commentRoute);
+app.use("/api/auth", authRoute)
+app.use("/api/users", userRoute)
+app.use("/api/posts", postRoute)
+app.use("/api/comments", commentRoute)
 
 
 const ConnectDatabase = async () => {

@@ -9,12 +9,12 @@ import PostDetails from './pages/PostDetails';
 import CreatePost from './pages/CreatePost';
 import EditPost from './pages/EditPost';
 import Profile from './pages/Profile';
+import { UserContextProvider } from './context/UserContext';
 
 function App() {
   return (
-    <>
+    <UserContextProvider>
       <Navbar />
-
       <Routes>
         <Route exact path="/" element={<Home />} />
         <Route exact path="/login" element={<Login />} />
@@ -24,9 +24,8 @@ function App() {
         <Route exact path="/edit/:id" element={<EditPost />} />
         <Route exact path="/post/:id" element={<PostDetails />} />
       </Routes>
-
       <Footer />
-    </>
+    </UserContextProvider>
   );
 }
 

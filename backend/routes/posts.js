@@ -1,10 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const postController = require('../controllers/postController');
+const verifyToken = require('../middlewares/tokenVerification');
 
 
 // Create a new post
-router.post('/create', postController.newPost);
+router.post('/create', verifyToken, postController.newPost);
 
 
 // Get a post
@@ -20,11 +21,11 @@ router.get('/user/:id', postController.getPostsByUser);
 
 
 // Update a post
-router.put('/:id', postController.updatePost);
+router.put('/:id', verifyToken, postController.updatePost);
 
 
 // Delete a post
-router.delete('/:id', postController.deletePost);
+router.delete('/:id', verifyToken, postController.deletePost);
 
 
 module.exports = router;

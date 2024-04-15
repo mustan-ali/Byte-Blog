@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
+const cookieParser = require('cookie-parser');
 require('dotenv').config()
 const PORT = process.env.PORT;
 const authRoute = require('./routes/auth');
@@ -10,6 +11,7 @@ const commentRoute = require('./routes/comments');
 
 
 app.use(express.json());
+app.use(cookieParser());
 app.use(authRoute);
 app.use(userRoute);
 app.use(postRoute);

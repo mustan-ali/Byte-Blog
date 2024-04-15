@@ -1,8 +1,10 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { BsSearch } from 'react-icons/bs';
 import { FaBars } from 'react-icons/fa'
 import Menu from './Menu';
+import { UserContext } from '../context/UserContext';
+
 
 export const Navbar = () => {
 
@@ -12,7 +14,7 @@ export const Navbar = () => {
         setMenu(!menu)
     }
 
-    const user = true;
+    const { user } = useContext(UserContext);
 
     return (
         <div className="flex items-center justify-between px-6 md:px-[200px] py-4">

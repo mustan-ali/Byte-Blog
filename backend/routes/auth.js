@@ -12,4 +12,7 @@ router.post('/login', authController.loginUser);
 // Logout User
 router.post('/logout', authController.logoutUser);
 
+// Verify User from token
+router.get('/verifyUser', authController.verifyUser);
+
 module.exports = router;

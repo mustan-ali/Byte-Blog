@@ -53,4 +53,16 @@ const logoutUser = async (req, res) => {
     }
 }
 
-module.exports = { registerUser, loginUser, logoutUser };
+
+const verifyUser = async (req, res) => {
+    const token = req.cookies.token;
+    jwt.verify(token, process.env.JWT_SECRET, async (err, data) => {
+        if (err) {
+            return res.status(400).json(err);
+        }
+        res.status(200).json(data);
+    });
+}
+
+
+module.exports = { registerUser, loginUser, logoutUser, verifyUser };

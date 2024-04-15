@@ -15,8 +15,12 @@ export function UserContextProvider({ children }) {
                 credentials: "include"
             });
             const data = await res.json();
+
+            if (res.status === 500) {
+                return setUser(null);
+            }
+
             setUser(data);
-            console.log(data);
         }
         catch (error) {
             console.log(error);

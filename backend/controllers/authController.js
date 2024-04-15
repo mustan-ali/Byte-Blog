@@ -56,10 +56,16 @@ const logoutUser = async (req, res) => {
 
 const verifyUser = async (req, res) => {
     const token = req.cookies.token;
+
+    if (!token) {
+        return res.status(500).json("Token not found");
+    }
+
     jwt.verify(token, process.env.JWT_SECRET, async (err, data) => {
         if (err) {
-            return res.status(400).json(err);
+            return res.status(500).json("Invalid token");
         }
+
         res.status(200).json(data);
     });
 }

@@ -5,12 +5,13 @@ const cookieParser = require('cookie-parser');
 require('dotenv').config()
 const cors = require('cors');
 const PORT = process.env.PORT;
+const FrontendURL = process.env.FRONTEND_URL;
 const authRoute = require('./routes/auth');
 const userRoute = require('./routes/users');
 const postRoute = require('./routes/posts');
 const commentRoute = require('./routes/comments');
 
-app.use(cors());
+app.use(cors({ origin: { FrontendURL }, credentials: true }));
 app.use(express.json());
 app.use(cookieParser());
 app.use("/api/auth", authRoute)

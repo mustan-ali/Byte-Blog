@@ -1,38 +1,91 @@
+import { useState, useEffect, useContext } from 'react';
+import { useParams } from 'react-router-dom'
 import { BiEdit } from 'react-icons/bi'
 import { MdDelete } from 'react-icons/md'
 import Comment from '../components/Comment'
+import { UserContext } from '../context/UserContext'
+const URL = process.env.REACT_APP_BACKEND_URL;
 
 export const PostDetails = () => {
+
+    const { id } = useParams();
+    const { user } = useContext(UserContext);
+    const [post, setPost] = useState({});
+    const [comments, setComments] = useState([]);
+
+    const fetchPost = async () => {
+        try {
+            const res = await fetch(`${URL}/api/posts/${id}`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+            const data = await res.json();
+            setPost(data);
+        }
+        catch (error) {
+            console.log(error);
+        }
+    }
+
+    const fetchComments = async () => {
+        try {
+            const res = await fetch(`${URL}/api/comments/${id}`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+            const data = await res.json();
+            setComments(data);
+        }
+        catch (error) {
+            console.log(error);
+        }
+    }
+
+
+    useEffect(() => {
+        fetchPost();
+        fetchComments();
+        // eslint-disable-next-line
+    }, [id]);
+
     return (
         <div>
             <div className="px-8 md:px-[200px] mt-8">
                 <div className="flex justify-between items-center">
-                    <h1 className="text-2xl font-bold text-black md:text-3xl">Test Title</h1>
-                    <div className="flex items-center justify-center space-x-2">
-                        <p className="cursor-pointer"><BiEdit /></p>
-                        <p className="cursor-pointer"><MdDelete /></p>
-                    </div>
+                    <h1 className="text-2xl font-bold text-black md:text-3xl">{post.title}</h1>
+                    {user?._id === post.userId && (
+                        <div className="flex items-center justify-center space-x-2">
+                            <p className="cursor-pointer"><BiEdit /></p>
+                            <p className="cursor-pointer"><MdDelete /></p>
+                        </div>
+                    )}
                 </div>
                 <div className="flex items-center justify-between mt-2 md:mt-4">
-                    <p>@Username</p>
+                    <p>@{post.username}</p>
                     <div className="flex space-x-2">
-                        <p>01/01/2024</p>
-                        <p>12:00</p>
+                        <p>{new Date(post.updatedAt).toString().slice(0, 15)}</p>
+                        <p>{new Date(post.updatedAt).toString().slice(16, 21)}</p>
                     </div>
                 </div>
-                <img src="https://images.unsplash.com/photo-1569396116180-7fe09fa16dd8?q=80&w=2069&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" className="w-full  mx-auto mt-8" alt="" />
-                <p className="mx-auto mt-8">lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptates.</p>
+                <img src={post.photo} className="w-full  mx-auto mt-8" alt="" />
+                <p className="mx-auto mt-8">{post.description}</p>
                 <div className="flex items-center mt-8 space-x-4 font-semibold">
                     <p>Categories:</p>
                     <div className="flex justify-center items-center space-x-2">
-                        <div className="bg-gray-300 rounded-lg px-3 py-1">Tech</div>
-                        <div className="bg-gray-300 rounded-lg px-3 py-1">Tech</div>
+                        {post.categories?.map((c, i) => (
+                            <div key={i} className="bg-gray-300 rounded-lg px-3 py-1">{c}</div>
+                        ))}
                     </div>
                 </div>
 
                 {/* comments */}
-                <Comment />
-                <Comment />
+                {comments?.map((comment) => (
+                    <Comment key={comment._id} comment={comment} />
+                ))}
 
                 {/* write a comment */}
                 <div className="w-full flex flex-col mt-4 md:flex-row">

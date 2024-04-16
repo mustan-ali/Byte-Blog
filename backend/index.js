@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
+const multer = require('multer');
 require('dotenv').config()
 const cors = require('cors');
 const PORT = process.env.PORT;
@@ -29,6 +30,22 @@ const ConnectDatabase = async () => {
         console.log("Error connecting to database: ", error);
     }
 }
+
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, "images")
+    },
+    filename: (req, file, cb) => {
+        cb(null, req.body.img)
+    }
+})
+
+
+const upload = multer({ storage: storage });
+app.post("/api/upload", upload.single("file"), (req, res) => {
+    res.status(200).json("File has been uploaded");
+})
 
 
 app.listen(PORT, () => {

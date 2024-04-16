@@ -13,7 +13,8 @@ export const HomePosts = ({ post }) => {
                 <div className="flex mb-2 text-sm font-semibold text-gray-500 items-center justify-between md:mb-4">
                     <p>@{post.username}</p>
                     <div className="flex space-x-2 text-sm">
-                        <p>{new Date(post.updatedAt).toString()}</p>
+                        <p>{new Date(post.updatedAt).toString().slice(0, 15)}</p>
+                        <p>{new Date(post.updatedAt).toString().slice(16, 21)}</p>
                     </div>
                 </div>
                 <p className="text-sm ">{post.description.slice(0, 200) + "... Read More"}</p>

@@ -1,4 +1,5 @@
 const Post = require('../models/Post');
+const Comment = require('../models/Comment');
 require('dotenv').config()
 
 
@@ -65,6 +66,7 @@ const updatePost = async (req, res) => {
 const deletePost = async (req, res) => {
     try {
         await Post.findByIdAndDelete(req.params.id);
+        await Comment.deleteMany({ postId: req.params.id });
         res.status(200).json("Post has been deleted");
     }
     catch (error) {

@@ -81,7 +81,7 @@ export const PostDetails = () => {
                     <h1 className="text-2xl font-bold text-black md:text-3xl">{post.title}</h1>
                     {user?.id === post.userId && (
                         <div className="flex items-center justify-center space-x-2">
-                            <p className="cursor-pointer"><BiEdit /></p>
+                            <p onClick={() => Navigate("/edit/" + id)} className="cursor-pointer"><BiEdit /></p>
                             <p onClick={handleDeletePost} className="cursor-pointer"><MdDelete /></p>
                         </div>
                     )}

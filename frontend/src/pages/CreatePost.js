@@ -45,7 +45,7 @@ export const CreatePost = () => {
             // console.log(data)
 
             try {
-                const imgUpload = await fetch(URL + "/api/upload", {
+                await fetch(URL + "/api/upload", {
                     method: "POST",
                     body: data
                 })

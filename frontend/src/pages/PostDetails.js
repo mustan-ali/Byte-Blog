@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from 'react';
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import { BiEdit } from 'react-icons/bi'
 import { MdDelete } from 'react-icons/md'
 import Comment from '../components/Comment'
@@ -8,10 +8,13 @@ const URL = process.env.REACT_APP_BACKEND_URL;
 
 export const PostDetails = () => {
 
+    const Navigate = useNavigate();
     const { id } = useParams();
     const { user } = useContext(UserContext);
     const [post, setPost] = useState({});
     const [comments, setComments] = useState([]);
+
+    console.log(user);
 
     const fetchPost = async () => {
         try {
@@ -45,6 +48,25 @@ export const PostDetails = () => {
         }
     }
 
+    const handleDeletePost = async () => {
+        try {
+            const res = await fetch(`${URL}/api/posts/${id}`, {
+                method: "DELETE",
+                credentials: "include",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+
+            if (res.ok) {
+                Navigate("/");
+            }
+        }
+        catch (error) {
+            console.log(error);
+        }
+    }
+
 
     useEffect(() => {
         fetchPost();
@@ -57,10 +79,10 @@ export const PostDetails = () => {
             <div className="px-8 md:px-[200px] mt-8">
                 <div className="flex justify-between items-center">
                     <h1 className="text-2xl font-bold text-black md:text-3xl">{post.title}</h1>
-                    {user?._id === post.userId && (
+                    {user?.id === post.userId && (
                         <div className="flex items-center justify-center space-x-2">
                             <p className="cursor-pointer"><BiEdit /></p>
-                            <p className="cursor-pointer"><MdDelete /></p>
+                            <p onClick={handleDeletePost} className="cursor-pointer"><MdDelete /></p>
                         </div>
                     )}
                 </div>

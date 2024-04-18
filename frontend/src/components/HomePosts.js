@@ -1,9 +1,11 @@
+const URL = process.env.REACT_APP_BACKEND_URL;
+
 export const HomePosts = ({ post }) => {
     return (
         <div className="w-full flex my-8 space-x-4">
             {/* left */}
             <div className="w-[350px] h-[200px] flex justify-center items-center">
-                <img src={post.photo} alt="" className="h-full w-full object-cover" />
+                <img src={`${URL}/images/${post.photo}`} alt="" className="h-full w-full object-cover" />
             </div>
             {/* right */}
             <div className="flex flex-col w-[65%]">

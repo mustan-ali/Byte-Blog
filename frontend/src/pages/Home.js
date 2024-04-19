@@ -16,7 +16,6 @@ export const Home = () => {
             });
             const data = await res.json();
             setPosts(data);
-            console.log(data);
         }
         catch (error) {
             console.log(error);

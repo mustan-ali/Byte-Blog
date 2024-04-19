@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { MdDelete } from 'react-icons/md'
 import { UserContext } from '../context/UserContext'
-import { Navigate } from 'react-router-dom';
+const URL = process.env.REACT_APP_BACKEND_URL;
 
 export const Comment = ({ c }) => {
 
@@ -18,7 +18,7 @@ export const Comment = ({ c }) => {
             });
 
             if (res.ok) {
-                Navigate("/post/" + c.postId);
+                window.location.reload();
             }
         }
         catch (error) {

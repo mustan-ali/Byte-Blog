@@ -14,8 +14,6 @@ export const PostDetails = () => {
     const [post, setPost] = useState({});
     const [comments, setComments] = useState([]);
 
-    console.log(user);
-
     const fetchPost = async () => {
         try {
             const res = await fetch(`${URL}/api/posts/${id}`, {

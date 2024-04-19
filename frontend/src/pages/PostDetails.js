@@ -13,6 +13,7 @@ export const PostDetails = () => {
     const { user } = useContext(UserContext);
     const [post, setPost] = useState({});
     const [comments, setComments] = useState([]);
+    const [comment, setComment] = useState('');
 
     const fetchPost = async () => {
         try {
@@ -65,6 +66,34 @@ export const PostDetails = () => {
         }
     }
 
+    const handleNewComment = async () => {
+        const newComment = {
+            comment,
+            author: user.username,
+            postId: id,
+            userId: user.id
+        }
+
+        try {
+            const res = await fetch(`${URL}/api/comments/create`, {
+                method: "POST",
+                credentials: "include",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(newComment),
+            });
+
+            if (res.ok) {
+                setComment('');
+                fetchComments();
+                Navigate("/post/" + id);
+            }
+        }
+        catch (error) {
+            console.log(error);
+        }
+    }
 
     useEffect(() => {
         fetchPost();
@@ -103,14 +132,14 @@ export const PostDetails = () => {
                 </div>
 
                 {/* comments */}
-                {comments?.map((comment) => (
-                    <Comment key={comment._id} comment={comment} />
+                {Array.isArray(comments) && comments.map((c) => (
+                    <Comment key={c._id} c={c} post={post} />
                 ))}
 
                 {/* write a comment */}
                 <div className="w-full flex flex-col mt-4 md:flex-row">
-                    <input type="text" placeholder="Write a comment" className="md:w-[80%] outline-none py-2 px-4 mt-4 md:mt-0" />
-                    <button className="bg-black text-sm text-white px-2 py-2 md:w-[20%] mt-4 md:mt-0">Add Comment</button>
+                    <input onChange={(e) => setComment(e.target.value)} type="text" placeholder="Write a comment" className="md:w-[80%] outline-none py-2 px-4 mt-4 md:mt-0" />
+                    <button onClick={handleNewComment} className="bg-black text-sm text-white px-2 py-2 md:w-[20%] mt-4 md:mt-0">Add Comment</button>
                 </div>
             </div>
         </div>

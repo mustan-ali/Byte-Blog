@@ -18,7 +18,7 @@ const newComment = async (req, res) => {
 
 const getPostComment = async (req, res) => {
     try {
-        const comments = await Comment.findById(req.params.id);
+        const comments = await Comment.find({ postId: req.params.id });
         res.status(200).json(comments);
     }
     catch (error) {

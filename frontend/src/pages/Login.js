@@ -22,9 +22,9 @@ export const Login = () => {
                 body: JSON.stringify({ email, password })
             });
             const data = await res.json();
-            if (data.errors) {
+            if (data.status !== 200) {
                 setError(true);
-            } else {
+            } else if (data.status === 200) {
                 setUser(data);
                 setError(false);
                 setEmail("");

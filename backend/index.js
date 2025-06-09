@@ -3,6 +3,7 @@ const app = express();
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 const multer = require('multer');
+const fs = require('fs');
 require('dotenv').config()
 const cors = require('cors');
 const path = require('path');
@@ -36,7 +37,12 @@ const ConnectDatabase = async () => {
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, "images")
+        const folder = path.join(__dirname, "images");
+
+        if (!fs.existsSync(folder)) {
+            fs.mkdirSync(folder)
+        }
+        cb(null, folder);
     },
     filename: (req, file, cb) => {
         cb(null, req.body.img)
